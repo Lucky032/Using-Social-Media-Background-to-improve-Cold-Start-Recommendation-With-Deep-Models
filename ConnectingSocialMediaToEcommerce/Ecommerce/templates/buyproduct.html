@@ -1,0 +1,94 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Voidmain</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<center><a href="#"><font color="white">Ecommerce</font></a></center>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+					<li><a href="/getproducts">Products</a></li>
+
+                    {% if request.session.role in "admin" %}
+                        <li><a href="/postproduct">Post Product</a></li>
+                    {% endif %}
+
+                    <li><a href="/transactions">Transactions</a></li>
+
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="site_content">
+			<div id="content">
+
+				<h1>Status : {{message}}</h1>
+
+				<form name="form" action="/buyproductaction/">
+					{% csrf_token %}
+					<div class="form_settings">
+                        <input type="hidden" name="product" value="{{ product.id }}">
+                        <p>
+							<span>Image :</span>
+                            <img src="{% static ''%}{{ product.path }}" height="300" width="300">
+						</p>
+						<p>
+							<span>Product Name :</span><input class="contact" type="text"
+								name="name" value="{{ product.name }}" readonly/>
+						</p>
+                        <p>
+							<span>Product Price :</span><input class="contact" type="text"
+								name="price" value="{{ product.price }}" readonly/>
+						</p>
+                        <p>
+							<span>Manufacture :</span><input class="contact" type="text"
+								name="manufacture" value="{{ product.manufacturer }}" readonly/>
+						</p>
+                        <p>
+							<span>Description :</span><input class="contact" type="text"
+								name="description" value="{{ product.description }}" readonly/>
+						</p>
+                        <p>
+							<span>Category :</span><input class="contact" type="text"
+								name="category" value="{{ product.category }}" readonly/>
+						</p>
+                        <p>
+							<span>Name :</span><input class="contact" type="text"
+								name="" required/>
+						</p>
+                        <p>
+							<span>Card NO :</span><input class="contact" type="text"
+								name="" required/>
+						</p>
+                        <p>
+							<span>Cvv :</span><input class="contact" type="text"
+								name="" required/>
+						</p>
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="Buy" />
+						</p>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

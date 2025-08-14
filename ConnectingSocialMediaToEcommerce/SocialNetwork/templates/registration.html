@@ -1,0 +1,128 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Voidmain</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<center><a href="#"><font color="white">Social Media</font></a></center>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+				
+					<li><a href="/login">Home</a></li>
+					<li><a href="/registration">Registration</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+			<div id="content">
+				
+				<h1>Registration Status : {{message}}</h1>
+				
+				<form name="form" action="/regaction/" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="form_settings">
+						<input type="hidden" name="utype" value="student" />
+						<p>
+							<span>Name :</span><input class="contact" type="text" name="name" value="" required/>
+						</p>
+						
+						<p>
+							<span>Enter Email :</span><input class="contact" type="email" name="username" value="" required/>
+						</p>
+						
+						<p>
+							<span>Password :</span><input class="contact" type="password" name="password" value="" required/>
+						</p>
+
+						<p>
+							<span>Mobile :</span><input class="contact" type="text" name="mobile" value="" required pattern="[6789][0-9]{9}"/>
+						</p>
+
+						<p>
+							<span>Select Gender:</span>
+							<select class="contact" name="gender" required>
+								<option value="">--select--</option>
+								<option value="male">Male</option>
+								<option value="female">Female</option>
+							</select>
+						</p>
+
+						<p>
+							<span>Select Date of Birth :</span><input class="contact" type="date" name="dob" value="" required/>
+						</p>
+						
+						<p>
+							<span>Address :</span><textarea rows="" cols="" name="address" required></textarea>
+						</p>
+
+						<p>
+							<span>Select Your Interests:</span>
+							<select class="contact" name="interests" multiple="multiple" required>
+								  <option value="">--select--</option>
+								  <option value="Technology">Technology</option>
+								  <option value="Fashion">Fashion</option>
+								  <option value="Electronics">Electronics</option>
+								  <option value="Health & Fitness">Health & Fitness</option>
+								  <option value="Books & Literature">Books & Literature</option>
+								  <option value="Food & Cooking">Food & Cooking</option>
+								  <option value="Travel & Adventure">Travel & Adventure</option>
+								  <option value="Gaming">Gaming</option>
+								  <option value="Sports">Sports</option>
+								  <option value="Home Decor">Home Decor</option>
+								  <option value="Beauty & Makeup">Beauty & Makeup</option>
+								  <option value="Music">Music</option>
+								  <option value="Movies & TV Shows">Movies & TV Shows</option>
+								  <option value="Photography">Photography</option>
+								  <option value="Cars & Bikes">Cars & Bikes</option>
+								  <option value="Pets & Animals">Pets & Animals</option>
+								  <option value="Finance & Investment">Finance & Investment</option>
+								  <option value="Art & Design">Art & Design</option>
+								  <option value="Education & Learning">Education & Learning</option>
+								  <option value="Gardening">Gardening</option>
+								  <option value="Mobile Phones">Mobile Phones</option>
+								  <option value="Gadgets">Gadgets</option>
+								  <option value="Baby & Kids">Baby & Kids</option>
+								  <option value="Handicrafts">Handicrafts</option>
+								  <option value="Online Shopping">Online Shopping</option>
+								  <option value="Fitness Equipment">Fitness Equipment</option>
+								  <option value="Smart Watches">Smart Watches</option>
+								  <option value="Jewelry">Jewelry</option>
+								  <option value="Stationery">Stationery</option>
+								  <option value="Virtual Reality">Virtual Reality</option>
+								  <option value="AI & Robotics">AI & Robotics</option>
+							</select>
+						</p>
+
+                        <p>
+							<span>Profile PIC :</span><input class="contact" type="file" name="pic" value="" required/>
+						</p>
+
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="Register" />
+						</p>
+
+					</div>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>

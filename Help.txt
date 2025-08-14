@@ -1,0 +1,19 @@
+to run social network open command prompt and run the following commands
+-------------------------------------------------------------------------
+cd C:\Users\laxma\OneDrive\Desktop\Project\ConnectingSocialMediaToEcommerce\SocialNetwork
+python manage.py runserver 2525
+
+
+open browser and run the following url (http://127.0.0.1:2525)
+
+
+
+
+
+to run ecommerce application open command prompt and run the following commands
+-------------------------------------------------------------------------
+cd C:\Users\laxma\OneDrive\Desktop\Project\ConnectingSocialMediaToEcommerce\Ecommerce
+python manage.py runserver 1515
+
+
+open browser and run the following url (http://127.0.0.1:1515)

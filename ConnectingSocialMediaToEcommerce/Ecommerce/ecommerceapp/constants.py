@@ -1,0 +1,1 @@
+SOCIAL_DB_PATH="C:\\Users\\laxma\\OneDrive\\Desktop\\Project\\ConnectingSocialMediaToEcommerce\\SocialNetwork\\db.sqlite3"

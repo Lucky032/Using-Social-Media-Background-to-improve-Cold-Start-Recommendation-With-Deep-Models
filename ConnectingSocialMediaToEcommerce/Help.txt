@@ -1,0 +1,61 @@
+Social Network
+-------------------------
+Registration
+Login
+
+Search Friends
+View Friends
+Send Friend request
+View Friend Request
+Accept or Reject Friend Request
+
+App Post
+View Posts
+Delete Post
+Share Post
+Search Posts
+Comment Post
+Like or Dislike Post
+
+View Profile
+Update Profile
+
+Logout
+
+
+
+Ecommerce
+------------------------------
+
+Admin
+-----------
+	Login  (username:admin,password:admin)
+
+	Add Product
+	View products
+	Search Produts
+	Delete Product
+
+	View Orders
+	Update Order Status
+
+	Logout
+
+
+User
+-------------------------
+	Registration
+	Login
+
+	Search products
+	view products
+	buy product
+
+	post review
+	post rating
+
+	view recomendations
+
+	view orers and status
+
+	logout

@@ -1,0 +1,110 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Voidmain</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+            <div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<center><a href="#"><font color="white">Ecommerce</font></a></center>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+                    <li><a href="/getproducts">Products</a></li>
+
+                    {% if request.session.role in "admin" %}
+                        <li><a href="/postproduct">Post Product</a></li>
+                    {% endif %}
+
+                    <li><a href="/transactions">Transactions</a></li>
+
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="site_content">
+
+			<div id="content">
+
+				<h1>Welcome to  <strong>{{request.session.username}}</strong>{{form.non_field_errors}}</h1>
+
+                <table style="width: 100%; border-spacing: 0;">
+
+                    <tr>
+
+						<td>Product ID</td>
+                        <td>Product Name</td>
+						<td>Transaction Date</td>
+                        <td>Status</td>
+
+                        {% if request.session.role in "user" %}
+                            <td>Post Rating</td>
+                        {% endif %}
+
+                        {% if request.session.role in "admin" %}
+                            <td>Update Status</td>
+                        {% endif %}
+
+                    </tr>
+
+                    {% if request.session.role in "admin" %}
+                        {% for transaction in transactions %}
+                            <tr>
+
+                                <td>{{transaction.productid}}</td>
+                                <td>{{transaction.productname}}</td>
+                                <td>{{transaction.tdate}}</td>
+                                <td>{{transaction.status}}</td>
+
+                                {% if request.session.role in "admin" %}
+                                    <td><a href="/updatetransaction?tid={{ transaction.id }}&status=delivered">Delivered</a></td>
+                                {% endif %}
+
+                            </tr>
+					    {% endfor %}
+                    {% endif %}
+
+                    {% if request.session.role not in "admin" %}
+
+                        {% for transaction in transactions %}
+
+                           {% if request.session.username in transaction.userid %}
+
+                               <tr>
+
+                                    <td>{{transaction.productid}}</td>
+                                    <td>{{transaction.productname}}</td>
+                                    <td>{{transaction.tdate}}</td>
+                                    <td>{{transaction.status}}</td>
+
+                                    {% if request.session.role in "user" %}
+                                        <td><a href="/postrating?pid={{ transaction.productid }}">rate product</a></td>
+                                    {% endif %}
+
+                                </tr>
+
+                           {% endif %}
+
+					    {% endfor %}
+
+                    {% endif %}
+
+  				</table>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

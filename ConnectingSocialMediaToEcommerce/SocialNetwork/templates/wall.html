@@ -1,0 +1,176 @@
+{% load  static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Voidmain</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+
+    <script>
+
+        var x = document.getElementById("lat");
+        var y = document.getElementById("long");
+        var z = document.getElementById("error");
+
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+            z.innerHTML = "Geolocation is not supported by this browser.";
+          }
+        }
+
+        function showPosition(position) {
+
+            alert("showing");
+            alert(position.coords.latitude);
+            alert(position.coords.longitude);
+
+            x.value = position.coords.latitude;
+            y.value = position.coords.longitude;
+        }
+
+    </script>
+
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<center><a href="#"><font color="white">Social Media</font></a></center>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+                    <li><a href="/getposts">Posts</a></li>
+                    <li><a href="/viewfriends">Friends</a></li>
+                    <li><a href="/viewprofile">Profile</a></li>
+                    <li><a href="/logout">logout</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+
+            <div class="sidebar">
+
+                <br/><br/><br/><br/>
+                <form name="form" action="/search">{% csrf_token %}
+                  <p>
+                    <input class="search" type="text" name="query" placeholder="Search Posts ...." required/>
+                    <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="{% static 'style/search.png'%}" alt="Search" title="Search" />
+                  </p>
+                </form>
+                <br/><br/><br/><br/><hr/><hr/><hr/>
+                <form name="form" action="/searchusers">{% csrf_token %}
+                  <p>
+                    <input class="search" type="text" name="keyword" placeholder="Find Friends ...." required/>
+                    <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="{% static 'style/search.png'%}" alt="Search" title="Search" />
+                  </p>
+                </form>
+                <ul>
+                    {% for result in results %}
+                        <li>
+                            <img src="{% static ''%}{{ result.pic }}" height="100" width="100">
+                            <a href="/sendfriendrequest?friendname={{ result.username }}">{{ result.username }}-- send request</a>
+                         </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div id="content">
+
+				<h1>Welcome to  <strong>{{request.session.username}}</strong>{{form.non_field_errors}}</h1>
+
+                <h1><strong><font color='red' size='5'>{{message}}</font></strong></h1>
+
+                <form name="form" action="/postaction/" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+
+                    <input type="hidden" id="lat" name="lat">
+                    <input type="hidden" id="long" name="long">
+
+                    <div class="form_settings">
+
+                        <p>
+                            <span>Title:</span><input class="contact" type="text" name="title" required/>
+                        </p>
+
+                        <p>
+                            <span>Enter Description:</span><textarea class="contact" name="description" required></textarea>
+                        </p>
+
+                        <p>
+                            <span>Enter Tags:</span><textarea class="contact" name="tags" required></textarea>
+                        </p>
+
+                        <p>
+                            <span>Browse Photo</span><input class="contact" type="file" name="image" required/>
+                        </p>
+                        <p style="padding-top: 15px">
+                            <span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="Post" />
+                        </p>
+                    </div>
+                </form>
+
+                {% for postbean in posts %}
+
+                    <h2>{{ postbean.post.username }}:{{ postbean.post.title }}
+                        {% if request.session.username in postbean.post.username %}
+                                <a href="/deletepost?post={{ postbean.post.id }}">delete</a>
+                        {% endif %}
+                        <a href="/sharepost?postid={{ postbean.post.id }}">Share</a>
+                    </h2>
+
+                     <img src="{% static ''%}{{ postbean.post.image }}" height="100" width="100">
+
+                    <br/>
+
+                    <p>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                         <a href="/likedislike?likeOrDislike=1&post={{ postbean.post.id }}">like</a> &nbsp; {{ postbean.likes }}&nbsp;&nbsp;&nbsp;&nbsp;
+                         <a href="/likedislike?likeOrDislike=0&post={{ postbean.post.id }}">dislike </a> {{ postbean.dislikes }}
+                    </p>
+
+                  
+                    <form name="form" action="/postcomment/" method="POST">
+                            {% csrf_token %}
+                            <div class="form_settings">
+                                <input type='hidden' name='post' value='{{ postbean.post.id }}'>
+                                <p>
+                                    <span>Write Your Comment Here </span><input type="text" name="comment" required>
+                                </p>
+                                <p style="padding-top: 15px">
+                                    <span>&nbsp;</span><input class="submit" type="submit"
+                                    name="contact_submitted" value="Post Comment" />
+                                </p>
+                            </div>
+                    </form>
+
+                    {% for comment in postbean.comments %}
+
+                        <p>
+                            {{ comment.comment }} ----- {{ comment.username }} posted on: {{ comment.datetime }} <br>
+                        </p>
+
+                    {% endfor %}
+
+                <br><hr>
+
+                {% endfor %}
+
+            </div>
+        </div>
+	</div>
+</body>
+</html>

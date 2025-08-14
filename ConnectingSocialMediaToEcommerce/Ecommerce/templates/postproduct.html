@@ -1,0 +1,108 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Voidmain</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<center><a href="#"><font color="white">Ecommerce</font></a></center>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+                    <li><a href="/getproducts">Products</a></li>
+
+                    {% if request.session.role in "admin" %}
+                        <li><a href="/postproduct">Post Product</a></li>
+                    {% endif %}
+
+                    <li><a href="/transactions">Transactions</a></li>
+
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="site_content">
+			<div id="content">
+
+				<h1>Status : {{message}}</h1>
+
+				<form name="form" action="/postproductaction/" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+
+					<div class="form_settings">
+
+                        <p>
+							<span>Name :</span><input class="contact" type="text" name="name" required/>
+						</p>
+
+                        <p>
+							<span>Price :</span><input type="text" class="contact" name="price" required></textarea>
+						</p>
+
+                        <p>
+							<span>Manufacturer :</span><input type="text" class="contact" name="manufacturer" required/>
+						</p>
+
+                        <p>
+							<span>Category :</span><input class="contact" type="text" name="category" required/>
+						</p>
+
+                        <p>
+							<span>Description :</span><textarea rows="" cols="" name="description" required></textarea>
+						</p>
+
+						<p>
+							<span>Select Gender:</span>
+							<select class="contact" name="gender" required>
+								<option value="">--select--</option>
+								<option value="male">Male</option>
+								<option value="female">Female</option>
+							</select>
+						</p>
+
+						<p>
+                            <span>Enter Tags:</span><textarea class="contact" name="tags" required></textarea>
+                        </p>
+
+						<p>
+                            <span>Select Age Group:</span>
+							<select name="age_group" id="age_group" class="form-control" required>
+								<option value="">-- Select Age Group --</option>
+								<option value="Kids">Kids</option>
+								<option value="Teenagers">Teenagers</option>
+								<option value="Young Adults">Young Adults</option>
+								<option value="Middle Aged">Middle Aged</option>
+								<option value="Seniors">Seniors</option>
+							  </select>
+                        </p>
+
+                        <p>
+							<span>Upload Image :</span><input type="file" name="path" required/>
+						</p>
+
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="Add Product" />
+						</p>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

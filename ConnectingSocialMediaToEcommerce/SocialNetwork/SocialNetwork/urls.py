@@ -1,0 +1,58 @@
+"""CyberbullyingDetection_2022 URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/4.1/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+
+from django.contrib import admin
+from django.urls import path
+from django.views.generic import TemplateView
+
+from osn.views import login, registration, logout, search, postComment, likeOrDisLike, \
+    addPost, getposts, deletepost, sharePost, viewfriends, searchUsers, sendFriendRequest, acceptFriendRequest, \
+    updateprofile, viewprofile, unFriend, updatepic
+
+urlpatterns = [
+
+    path('admin/', admin.site.urls),
+
+    path('', TemplateView.as_view(template_name='index.html'), name='login'),
+    path('login/', TemplateView.as_view(template_name='index.html'), name='login'),
+    path('loginaction/', login, name='loginaction'),
+
+    path('registration/', TemplateView.as_view(template_name='registration.html'), name='registration'),
+    path('regaction/', registration, name='regaction'),
+
+    path('postaction/', addPost, name='post action'),
+    path('postaction/', addPost, name='post action'),
+
+    path('getposts/', getposts, name='posts'),
+    path('search/', search, name='searchposts'),
+    path('postcomment/', postComment, name='postcomment'),
+    path('likedislike/', likeOrDisLike, name='likedislike'),
+    path('deletepost/', deletepost, name='deletepost'),
+    path('sharepost/', sharePost, name='share post'),
+
+    path('viewfriends/', viewfriends, name='transactions'),
+    path('searchusers/', searchUsers, name='transactions'),
+
+    path('sendfriendrequest/', sendFriendRequest, name='transactions'),
+    path('acceptfriendrequest/', acceptFriendRequest, name='transactions'),
+
+    path('viewprofile/', viewprofile, name='transactions'),
+    path('updateprofile/', updateprofile, name='transactions'),
+    path('updatepic/', updatepic, name='transactions'),
+    path('unfriend/', unFriend, name='transactions'),
+
+    path('logout/', logout, name='logout'),
+]

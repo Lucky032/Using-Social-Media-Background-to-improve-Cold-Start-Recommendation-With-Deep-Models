@@ -1,0 +1,130 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Voidmain</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+            <div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<center><a href="#"><font color="white">Ecommerce</font></a></center>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+                    <li><a href="/getproducts">Products</a></li>
+
+                    {% if request.session.role in "admin" %}
+                        <li><a href="/postproduct">Post Product</a></li>
+                    {% endif %}
+
+                    <li><a href="/transactions">Transactions</a></li>
+
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="site_content">
+
+            <div class="sidebar">
+				{% if request.session.role not in "admin" %}
+					<h3>Recommended Products</h3>
+					{% for recommended in userrecommendations %}
+						<h4>{{ recommended.product.name }}</h4>
+						<img src="{% static ''%}{{recommended.product.path }}" height="100" width="100">
+						<h4>Price:{{ recommended.product.price }}</h4>
+
+						<br/><br/><hr/>
+					{% endfor %}
+				{% endif %}
+            </div>
+
+			<div id="content">
+
+				<h1>Welcome to  <strong>{{request.session.username}}</strong>{{form.non_field_errors}}</h1>
+
+                <form name="form" action="/search">
+                    {% csrf_token %}
+                    <div class="form_settings">
+                        <p>
+                            <span>Search Products:</span><input class="contact" type="text" name="query" required/>
+                        </p>
+                        <p style="padding-top: 15px">
+                            <span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="Search" />
+                        </p>
+                    </div>
+                </form>
+
+                {% for productbean in products %}
+
+                    <h2>{{ productbean.product.name }}
+                        {% if request.session.role in "admin" %}
+                                <a href="/deleteproduct?product={{ productbean.product.id }}">delete</a>
+                        {% endif %}
+                         {% if request.session.role not in "admin" %}
+                                <a href="/buyproduct?product={{ productbean.product.id }}">buy</a>
+                        {% endif %}
+                    </h2>
+
+                     <img src="{% static ''%}{{ productbean.product.path }}" height="100" width="100">
+
+                    <br/>
+                    <p>
+
+                        {% if request.session.role in "admin" %}
+                             Rating ( {{ productbean.rating }}&nbsp;)&nbsp
+                        {% endif %}
+                    </p>
+
+
+                    <p>Rating : {{ productbean.rating }}</p>
+
+                    <p>Description : {{ productbean.description }}</p>
+
+                    <h3>Comments</h3>
+
+                    {% if request.session.role not in "admin" %}
+                        <form name="form" action="/postcomment/" method="POST">
+                            {% csrf_token %}
+                            <div class="form_settings">
+                                <input type='hidden' name='product' value='{{ productbean.product.id }}'>
+                                <p>
+                                    <span>Write Your Comment Here </span><input type="text" name="text" required>
+                                </p>
+                                <p style="padding-top: 15px">
+                                    <span>&nbsp;</span><input class="submit" type="submit"
+                                    name="contact_submitted" value="Post Comment" />
+                                </p>
+                            </div>
+                        </form>
+                    {% endif %}
+
+                    {% for comment in productbean.comments %}
+
+                        <p>
+                            {{ comment.user }} posted on: {{ comment.datetime }} <br>
+                            {{ comment.text }}
+                        </p>
+
+                    {% endfor %}
+
+                <br><hr>
+
+                {% endfor %}
+
+            </div>
+        </div>
+	</div>
+</body>
+</html>
